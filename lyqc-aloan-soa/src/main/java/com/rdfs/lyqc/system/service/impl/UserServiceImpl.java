@@ -18,7 +18,6 @@ import com.rdfs.lyqc.common.utils.Md5Util;
 import com.rdfs.lyqc.system.entity.SyDepartment;
 import com.rdfs.lyqc.system.entity.SyPermSet;
 import com.rdfs.lyqc.system.entity.SyUser;
-import com.rdfs.lyqc.system.entity.SyUserDealer;
 import com.rdfs.lyqc.system.entity.SyUserDepartment;
 import com.rdfs.lyqc.system.service.UserService;
 
@@ -34,17 +33,6 @@ public class UserServiceImpl extends HibernateServiceSupport implements UserServ
 		user.setLastTime(new Date());
 
 		updateEntity(user,"userName","address","trueName","sex","phone","email","cardType","cardId","birthday","postalCode","userType","lastTime","userDeparment");
-		// 要启用事务
-		SyUser syUser = getEntityByCode(SyUser.class,user.getUserId(),true);
-		syUser.getUserDealers().clear();
-		
-		if (user.getUserDealers()!=null && !user.getUserDealers().isEmpty()) {
-			List<SyUserDealer> dealers = user.getUserDealers();
-			for(SyUserDealer dealer : dealers){
-				dealer.setUser(user);
-				syUser.getUserDealers().add(dealer);
-			}
-		}		
 	}
 
 	private void checkParms(SyUser user) {
@@ -79,15 +67,6 @@ public class UserServiceImpl extends HibernateServiceSupport implements UserServ
 			if (StringUtils.isBlank(user.getUserDeparment().getUserPostion())) {
 				throw new RuntimeException("保存失败，用户角色参数不存在");
 			}
-		} else {
-			if (user.getUserDealers().isEmpty() && user.getUserType().equals(Constants.USER_TYPE.SD)) {
-				throw new RuntimeException("保存失败，所属门店参数不存在");
-			}
-			for (SyUserDealer syUserDealer : user.getUserDealers()) {
-				if (StringUtils.isBlank(syUserDealer.getUserPostion()) || syUserDealer.getDealer().getDealerCode() == null) {
-					throw new RuntimeException("保存失败，门店职责参数不存在");
-				}
-			}
 		}
 	}
 
@@ -108,10 +87,6 @@ public class UserServiceImpl extends HibernateServiceSupport implements UserServ
 		if(user.getUserType().equals(Constants.USER_TYPE.CS)){
 			prefix = user.getUserDeparment().getDepartmentId().toString();
 			sql += "'"+ prefix +"'";
-		} else {
-			SyUserDealer userDealer = user.getUserDealers().get(0);
-			prefix = userDealer.getDealer().getDealerCode().toString();
-			sql += "'" + prefix +"'";
 		}
 		List<?> list = getSession().createNativeQuery(sql).setResultTransfer(Transformers.ALIAS_TO_ENTITY_MAP).getResultList();
 		if(list!=null && !list.isEmpty()){
@@ -157,11 +132,6 @@ public class UserServiceImpl extends HibernateServiceSupport implements UserServ
 				}
 				syUserDeparment.setUserId(user.getUserId());
 				saveEntity(syUserDeparment);
-			} else if (user.getUserType().equals(Constants.USER_TYPE.SD)) {
-				List<SyUserDealer> dealers = user.getUserDealers();
-				for (SyUserDealer syUserDealer : dealers) {
-					syUserDealer.setUser(user);
-				}
 			}
 			
 			/*String person = user.getTrueName() + CatchCxtUtil.getDicDesc("_sex", user.getSex());

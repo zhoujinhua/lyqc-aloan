@@ -43,11 +43,7 @@ public class SyUser implements java.io.Serializable {
 	private String randcode;
 	
 	@JsonIgnore
-	private List<SyUserDealer> userDealers;
-	@JsonIgnore
 	private List<SyPermSet> permSets;
-	
-	private String dealerCode;
 	
 	public SyUser() {
 		
@@ -253,29 +249,6 @@ public class SyUser implements java.io.Serializable {
 
 	public void setPermSets(List<SyPermSet> permSets) {
 		this.permSets = permSets;
-	}
-
-	public List<SyUserDealer> getUserDealers() {
-		return userDealers;
-	}
-
-	public void setUserDealers(List<SyUserDealer> userDealers) {
-		this.userDealers = userDealers;
-	}
-
-	public String getDealerCode() {
-		if(this.userDealers!=null && !this.userDealers.isEmpty()){
-			String code = "";
-			 for(SyUserDealer dealer : this.userDealers){
-				 code += dealer.getDealer().getDealerCode() + ",";
-			 }
-			 return code;
-		}
-		return dealerCode;
-	}
-
-	public void setDealerCode(String dealerCode) {
-		this.dealerCode = dealerCode;
 	}
 
 

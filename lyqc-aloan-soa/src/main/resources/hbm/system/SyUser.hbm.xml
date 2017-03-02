@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.rdfs.lyqc.system.entity.SyUser" table="sy_user">
+		<id name="userId" type="java.lang.String">
+			<column name="user_id" />
+		</id>
+		<property name="userName" type="java.lang.String">
+			<column length="20" name="user_name" not-null="true" unique="true" />
+		</property>
+		<property name="trueName" type="java.lang.String">
+			<column length="40" name="true_name" not-null="true" />
+		</property>
+		<property name="cardType" type="java.lang.String">
+			<column name="card_type" />
+		</property>
+		<property name="cardId" type="java.lang.String">
+			<column length="30" name="card_id" />
+		</property>
+		<property name="password" type="java.lang.String">
+			<column length="40" name="password" not-null="true" />
+		</property>
+		<property name="birthday" type="java.lang.String">
+			<column length="20" name="birthday" />
+		</property>
+		<property name="sex" type="java.lang.String">
+			<column name="sex" />
+		</property>
+		<property name="province" type="java.lang.String">
+			<column length="30" name="province" />
+		</property>
+		<property name="city" type="java.lang.String">
+			<column length="30" name="city" />
+		</property>
+		<property name="email" type="java.lang.String">
+			<column name="email" />
+		</property>
+		<property name="phone" type="java.lang.String">
+			<column length="30" name="phone" not-null="true" />
+		</property>
+		<property name="address" type="java.lang.String">
+			<column name="address" not-null="true" />
+		</property>
+		<property name="postalCode" type="java.lang.String">
+			<column length="20" name="postal_code" />
+		</property>
+		<property name="head" type="java.lang.String">
+			<column length="100" name="head" />
+		</property>
+		<property name="createTime" type="java.sql.Timestamp">
+			<column length="19" name="create_time" not-null="true" />
+		</property>
+		<property name="lastTime" type="java.sql.Timestamp">
+			<column length="19" name="last_time" not-null="true" />
+		</property>
+		<property name="loginTimes" type="java.lang.Integer">
+			<column name="login_times" />
+		</property>
+		<property name="userStatus" type="java.lang.String">
+			<column name="user_status" not-null="true" />
+		</property>
+		<property name="userType" type="java.lang.String">
+			<column name="user_type" not-null="true" />
+		</property>
+		<many-to-one class="com.rdfs.lyqc.system.entity.SyUserDepartment" insert="false" lazy="false"
+			name="userDeparment" update="false" not-found="ignore" cascade="delete">
+			<column name="user_id" />
+		</many-to-one>
+		<bag name="permSets" table="sy_user_permset" lazy="false">
+			<key column="user_id" />
+			<many-to-many class="com.rdfs.lyqc.system.entity.SyPermSet" column="perm_id" unique="false" />
+		</bag>
+	</class>
+</hibernate-mapping>

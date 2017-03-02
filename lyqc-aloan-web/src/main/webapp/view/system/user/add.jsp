@@ -19,86 +19,6 @@ request.setAttribute("basePath", basePath);
 </head>
 <script type="text/javascript">
 $(function(){
-	function loadDealer(){
-		$.ajax({
-			  type: 'POST',
-			  url: contextPath + '/dealer/listDC',
-			  data:{},
-			  success: function(data){
-				  if(data!=null && data.aaData!=null){
-					  $.each(data.aaData,function(i){
-							$("#user-dealer").append("<option value='"+data.aaData[i].dealerCode+"'>"+data.aaData[i].dealerName+"</option>");
-					  });
-					  if($("#user-dealer").attr("data-value")!=null && $("#user-dealer").attr("data-value")!=""){
-						  chose_mult_set_ini("#user-dealer",$("#user-dealer").attr("data-value"));
-					  }
-				  }
-				  $("#user-dealer").chosen({
-				        no_results_text: "未发现匹配的字符串!",
-				    	allow_single_deselect: true,
-				    	width:"100%"
-			   	  });
-			  },
-			  dataType:'json'
-		});
-	}
-	function sort(){
-		var i = 0;
-		$(".udealer-add").each(function(){
-			$(this).find(".user-dealer-code").attr("name","userDealers["+i+"].dealer.dealerCode");
-			$(this).find(".user-dealer-name").attr("name","userDealers["+i+"].dealer.dealerName");
-			$(this).find(".user-dealer-role").attr("name","userDealers["+i+"].userPostion");
-			i++;
-		});
-	}
-	function init(){
-		$(".chosen").not("#user-dealer").each(function(){
-			$(this).val($(this).attr("data-value"));
-			$(this).chosen({
-		        no_results_text: "未发现匹配的字符串!",
-		    	allow_single_deselect: true,
-		    	width:"100%"
-	   		});
-		});
-		ztree_input("radio", contextPath + '/department/deptTree', $("#user-department"));
-		loadDealer();
-	}
-	$("#user-type").change(function(){
-		$("#department-area").addClass("hide").hide();
-		$("#dealer-area").addClass("hide").hide();
-		$(".udealer-add").remove();
-		if($(this).val()!=null && $(this).val()!=""){
-			if($(this).val() == '01'){
-				$("#department-area").removeClass("hide").show();
-				$("#user-department").trigger("chosen:updated");
-			} else {
-				$("#dealer-area").removeClass("hide").show();
-				$("#user-dealer").trigger("chosen:updated");
-			}
-		}
-	});
-	$(document).delegate('#user-dealer','change',function(evt, params){
-		if(params.selected != undefined){
-			var id = params.selected;
-			var html = '<div class="form-group udealer-add"><div class="col-sm-6 col-sm-12"><label class="control-label col-sm-4">所属机构</label><div class="col-sm-7">';
-			html += '<input class="input form-control user-dealer-name" readonly value="'+$("#user-dealer [value='"+id+"']").text()+'"><input type="hidden" class="user-dealer-code" value="'+id+'"></div></div>';
-			html += '<div class="col-sm-6 col-sm-12"><label class="control-label col-sm-4">用户角色</label><div class="col-sm-7">';
-			html += '<select class="select required form-control user-dealer-role" id="user-dealer-'+id+'"></select></div></div></div>';
-			
-			$("#dealer-area").after(html);
-			$("#user-dealer-"+id).append($("#hidden-dealer-role").html());
-			$("#user-dealer-"+id).chosen({
-		        no_results_text: "未发现匹配的字符串!",
-		    	allow_single_deselect: true,
-		    	width:"100%",
-		    	disable_search_threshold:10
-	   		});
-		} else {
-			var id = params.deselected;
-			$("#user-dealer-"+id).parent().parent().parent().remove();
-		}
-		sort();
-	});
 	$("#fn-btn-save").click(function() {
 		validate();
 		if ($(".error").length!=0) {
@@ -108,16 +28,11 @@ $(function(){
 			$("input[name='userName']").fieldError("用户名不可为admin");
 			return false;
 		}
-		if($("#user-type").val()!='01'){
-			$("#user-department").attr("name","");
-			$("#user-department").siblings(":hidden").attr("name","");
-			$("#user-role").attr("name","");
-		}
 		$("#fn-save-form").attr("action", "${path}/user/save?juid="+juid);
 		$("#fn-save-form").submit();
 	});
 	
-	init();
+	ztree_input("radio", contextPath + '/department/deptTree', $("#user-department"));
 });
 </script>
 <body id="inner-body">
@@ -220,90 +135,25 @@ $(function(){
 								<div class="col-sm-6 col-sm-12">
 									<label class="control-label col-sm-4">用户类型</label>
 									<div class="col-sm-7">
-										<cs:select class="form-control chosen" dicField="_user_type" name="userType" id="user-type" allowBlank="true" value="${user.userType }"/>
-										<cs:select class="form-control hide" dicField="_c_role" id="hidden-role" allowBlank="true"/>
-										<cs:select class="form-control hide" dicField="_d_role" id="hidden-dealer-role" allowBlank="true"/>
+										<cs:select class="form-control chosen" dicField="_user_type" dicFilter="01" name="userType" id="user-type" value="${user.userType }"/>
 									</div>
 								</div>
 							</div>
-							<c:if test="${user.userDeparment==null }">
-								<div class="form-group hide" id="department-area">
-									<div class="col-sm-6 col-sm-12">
-										<label class="control-label col-sm-4">所属机构</label>
-										<div class="col-sm-7">
-											<input class="form-control required" id="user-department" name='userDeparment.departmentName' readonly>
-											<input type="hidden" id="user-department" name='userDeparment.departmentId'>
-										</div>
-									</div>
-									<div class="col-sm-6 col-sm-12">
-										<label class="control-label col-sm-4">用户角色</label>
-										<div class="col-sm-7" id="user-role-area">
-											<select class="form-control required chosen" id="user-role"  name='userDeparment.userPostion'>
-												<option value="">--请选择--</option>
-											</select>
-										</div>
+							<div class="form-group">
+								<div class="col-sm-6 col-sm-12">
+									<label class="control-label col-sm-4">所属机构</label>
+									<div class="col-sm-7">
+										<input class="form-control required" id="user-department" name='userDeparment.departmentName' readonly value="${user.userDeparment.departmentName }">
+										<input type="hidden" id="user-department" name='userDeparment.departmentId' value="${user.userDeparment.departmentId }">
 									</div>
 								</div>
-							</c:if>
-							<c:if test="${user.userDeparment!=null && user.userType == '01'}">
-								<div class="form-group" id="department-area">
-									<div class="col-sm-6 col-sm-12">
-										<label class="control-label col-sm-4">所属机构</label>
-										<div class="col-sm-8">
-											<input class="form-control required" id="user-department" name='userDeparment.departmentName' readonly value="${user.userDeparment.departmentName }">
-											<input type="hidden" id="user-department" name='userDeparment.departmentId' value="${user.userDeparment.departmentId }">
-										</div>
-									</div>
-									<div class="col-sm-6 col-sm-12">
-										<label class="control-label col-sm-4">用户角色</label>
-										<div class="col-sm-7" id="user-role-area">
-											<select class="form-control required" id="user-role"  name='userDeparment.userPostion' data-value="${user.userDeparment.userPostion }">
-												<option value="">--请选择--</option>
-											</select>
-										</div>
+								<div class="col-sm-6 col-sm-12">
+									<label class="control-label col-sm-4">用户角色</label>
+									<div class="col-sm-7">
+										<cs:select class="form-control required chosen" dicField="_c_role" allowBlank="true" value="${user.userDeparment.userPostion }" name="userDeparment.userPostion"/>
 									</div>
 								</div>
-							</c:if>
-							<c:if test="${user.userDealers==null || fn:length(user.userDealers) == 0}">
-								<div class="form-group hide" id="dealer-area">
-									<div class="col-sm-6 col-sm-12">
-										<label class="control-label col-sm-4">所属机构</label>
-										<div class="col-sm-7">
-											<select class="select form-control required" name="" id="user-dealer" multiple>
-											
-											</select>
-										</div>
-									</div>
-								</div>
-							</c:if>
-							<c:if test="${user.userDealers!=null && fn:length(user.userDealers)!=0 }">
-								<div class="form-group" id="dealer-area">
-									<div class="col-sm-6 col-sm-12">
-										<label class="control-label col-sm-4">所属机构</label>
-										<div class="col-sm-7">
-											<select class="select form-control required" name="" id="user-dealer" multiple data-value="${user.dealerCode }">
-											</select>
-										</div>
-									</div>
-								</div>
-								<c:forEach items="${user.userDealers }" var="userDealer" varStatus="status">
-									<div class="form-group udealer-add">
-										<div class="col-sm-6 col-sm-12">
-											<label class="control-label col-sm-4">所属机构</label>
-											<div class="col-sm-7">
-												<input class="input form-control user-dealer-name" readonly value="${userDealer.dealer.dealerName }" name="userDealers[${status.index }].dealer.Name">
-												<input type="hidden" class="user-dealer-code" value="${userDealer.dealer.dealerCode }" name="userDealers[${status.index }].dealer.dealerCode">
-											</div>
-										</div>
-										<div class="col-sm-6 col-sm-12">
-											<label class="control-label col-sm-4">用户角色</label>
-											<div class="col-sm-7">
-												<cs:select class="select required form-control user-dealer-role chosen" dicField="_d_role"  id="user-dealer-${userDealer.dealer.dealerCode }" allowBlank="true" name="userDealers[${status.index }].userPostion" value="${userDealer.userPostion }"/>
-											</div>
-										</div>
-									</div>
-								</c:forEach>
-							</c:if>
+							</div>
 							<div class="form-group">
 								<div class="col-sm-12">
 									<p class="center-block">

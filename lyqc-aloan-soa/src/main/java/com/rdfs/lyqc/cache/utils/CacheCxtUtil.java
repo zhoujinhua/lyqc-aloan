@@ -12,15 +12,12 @@ import com.rdfs.core.contants.Constants;
 import com.rdfs.core.redis.JedisUtil;
 import com.rdfs.core.spring.SpringContextBeanFactory;
 import com.rdfs.core.utils.RdfsUtils;
-import com.rdfs.lyqc.cache.service.CacheDealerService;
 import com.rdfs.lyqc.cache.service.CacheMasterService;
 import com.rdfs.lyqc.cache.service.CacheRegionService;
 import com.rdfs.lyqc.cache.service.CacheResourceService;
 import com.rdfs.lyqc.cache.service.CacheUserService;
 import com.rdfs.lyqc.system.entity.SyDictItem;
 import com.rdfs.lyqc.system.entity.SyRegion;
-
-import redis.clients.jedis.Jedis;
 
 @SuppressWarnings("all")
 public class CacheCxtUtil {
@@ -30,7 +27,6 @@ public class CacheCxtUtil {
 	private static CacheUserService cacheUserService = SpringContextBeanFactory.getBean("cacheUserServiceImpl");
 	private static CacheMasterService cacheMasterService = SpringContextBeanFactory.getBean("cacheMasterServiceImpl");
 	private static CacheRegionService cacheRegionService = SpringContextBeanFactory.getBean("cacheRegionServiceImpl");
-	private static CacheDealerService cacheDealerService = SpringContextBeanFactory.getBean("cacheDealerServiceImpl");
 	private static CacheResourceService cacheResourceService = SpringContextBeanFactory.getBean("cacheResourceServiceImpl");
 
 	/**
@@ -41,7 +37,6 @@ public class CacheCxtUtil {
 		cacheMasterService.cacheDictData();
 		cacheMasterService.cacheParamData();
 		cacheRegionService.cacheRegionData();
-		cacheDealerService.cacheDealerData();
 		cacheResourceService.cacheResourceData();
 	}
 	
