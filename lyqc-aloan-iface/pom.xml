@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.lyqc</groupId>
+    <artifactId>lyqc-aloan-parent</artifactId>
+    <version>1.0.0</version>
+      <relativePath></relativePath>
+  </parent>
+  <artifactId>lyqc-aloan-iface</artifactId>
+  <name>lyqc-aloan-iface</name>
+  <dependencies>
+  		<dependency>
+  			<groupId>com.lyqc</groupId>
+  			<artifactId>lyqc-aloan-common</artifactId>
+  			<version>1.0.0</version>
+  		</dependency>
+  		<dependency>
+  			<groupId>com.rdfs</groupId>
+  			<artifactId>rdfs-orm</artifactId>
+  			<version>1.0.0</version>
+  		</dependency>
+		<dependency>  
+            <groupId>com.fasterxml.jackson.core</groupId>  
+            <artifactId>jackson-annotations</artifactId>  
+        </dependency>  
+  
+        <dependency>  
+            <groupId>com.fasterxml.jackson.core</groupId>  
+            <artifactId>jackson-core</artifactId>  
+        </dependency>  
+        <dependency>  
+            <groupId>com.fasterxml.jackson.core</groupId>  
+            <artifactId>jackson-databind</artifactId>  
+        </dependency>
+
+  </dependencies>
+  <build>
+  	 <plugins>
+    	<plugin>  
+            <groupId>org.apache.maven.plugins</groupId>  
+            <artifactId>maven-compiler-plugin</artifactId>
+         </plugin>
+          <plugin>  
+            <groupId>org.apache.maven.plugins</groupId>  
+            <artifactId>maven-surefire-plugin</artifactId>
+          </plugin>
+      </plugins>
+  </build>
+</project>
