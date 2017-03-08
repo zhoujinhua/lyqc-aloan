@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.rdfs.lyqc.dianc.entity.DhOverdueDetail" table="DH_OVERDUE_DETAIL" >
+        <id name="appCode" type="java.lang.String">
+            <column name="APP_CODE" />
+        </id>
+        <property name="overdueDays" type="java.lang.Integer">
+            <column name="OVERDUE_DAYS"  />
+        </property>
+        <property name="avgOverdueDays" type="java.lang.Double">
+            <column name="AVG_OVERDUE_DAYS" />
+        </property>
+        <property name="overdueRange" type="java.lang.String">
+            <column name="OVERDUE_RANGE" />
+        </property>
+        <property name="overdueAmount" type="java.lang.Double">
+            <column name="OVERDUE_AMOUNT" />
+        </property>
+        <property name="overdueInstalls" type="java.lang.Integer">
+            <column name="OVERDUE_INSTALLS" />
+        </property>
+        <property name="alreadyInstalls" type="java.lang.Integer">
+            <column name="ALREADY_INSTALLS"  />
+        </property>
+        <property name="termFinance" type="java.lang.Integer">
+            <column name="TERM_FINANCE" />
+        </property>
+        <property name="highOverdueDays" type="java.lang.Integer">
+            <column name="HIGH_OVERDUE_DAYS" />
+        </property>
+        <property name="sumOverdueDays" type="java.lang.Integer">
+            <column name="SUM_OVERDUE_DAYS"  />
+        </property>
+        <property name="exemptionDays" type="java.lang.Integer">
+            <column name="EXEMPTION_DAYS" />
+        </property>
+        <property name="overdueStatus" type="java.lang.String">
+            <column name="OVERDUE_STATUS" />
+        </property>
+        <property name="overdueStatusZh" type="java.lang.String">
+            <column name="OVERDUE_STATUS_ZH" />
+        </property>
+        <property name="riskLevel" type="java.lang.String">
+            <column name="RISK_LEVEL"  />
+        </property>
+        <property name="fiveClafion" type="java.lang.String">
+            <column name="FIVE_CLAFION" />
+        </property>
+        <property name="isCurrOverdue" type="java.lang.String">
+            <column name="IS_CURR_OVERDUE" />
+        </property>
+        <property name="currVehicleAge" type="java.lang.Integer">
+            <column name="CURR_VEHICLE_AGE"  />
+        </property>
+        <property name="usedGuarAmount" type="java.lang.Double">
+            <column name="USED_GUAR_AMOUNT" />
+        </property>
+        <property name="actSaleRempal" type="java.lang.Double">
+            <column name="ACT_SALE_REMPAL" />
+        </property>
+        <property name="curSaleRempal" type="java.lang.Double">
+            <column name="CUR_SALE_REMPAL"  />
+        </property>
+        <property name="actFinRempal" type="java.lang.Double">
+            <column name="ACT_FIN_REMPAL" />
+        </property>
+        <property name="curFinRempal" type="java.lang.Double">
+            <column name="CUR_FIN_REMPAL" />
+        </property>
+        <property name="vehAcsdisAmount" type="java.lang.Double">
+            <column name="VEH_ACSDIS_AMOUNT"  />
+        </property>
+        <property name="vehDisposalAmount" type="java.lang.Double">
+            <column name="VEH_DISPOSAL_AMOUNT" />
+        </property>
+        <property name="vehRevoveryNotice" type="java.lang.String">
+            <column name="VEH_REVOVERY_NOTICE" />
+        </property>
+        <property name="collPhoneStatus" type="java.lang.String">
+            <column name="COLL_PHONE_STATUS"  />
+        </property>
+        <property name="collPhoneOperator" type="java.lang.String">
+            <column name="COLL_PHONE_OPERATOR" />
+        </property>
+        <property name="litionStatus" type="java.lang.String">
+            <column name="LITION_STATUS" />
+        </property>
+        <property name="litionOperator" type="java.lang.String">
+            <column name="LITION_OPERATOR" />
+        </property>
+        <property name="litionReqDate" type="java.sql.Date">
+            <column name="LITION_REQ_DATE"  />
+        </property>
+        <property name="visitsStatus" type="java.lang.String">
+            <column name="VISITS_STATUS" />
+        </property>
+        <property name="visitsOperator" type="java.lang.String">
+            <column name="VISITS_OPERATOR" />
+        </property>
+        <property name="visitsReqDate" type="java.sql.Date">
+            <column name="VISITS_REQ_DATE" />
+        </property>
+        <property name="clocarStatus" type="java.lang.String">
+            <column name="CLOCAR_STATUS"  />
+        </property>
+        <property name="clocarOperator" type="java.lang.String">
+            <column name="CLOCAR_OPERATOR" />
+        </property>
+        <property name="clocarReqDate" type="java.sql.Date">
+            <column name="CLOCAR_REQ_DATE" />
+        </property>
+        <property name="vehdisStatus" type="java.lang.String">
+            <column name="VEHDIS_STATUS"  />
+        </property>
+        <property name="vehdisOperator" type="java.lang.String">
+            <column name="VEHDIS_OPERATOR"  />
+        </property>
+        <property name="vehdisReqDate" type="java.sql.Date">
+            <column name="VEHDIS_REQ_DATE" />
+        </property>
+        <property name="verifiStatus" type="java.lang.String">
+            <column name="VERIFI_STATUS" />
+        </property>
+        <property name="verifiOperator" type="java.lang.String">
+            <column name="VERIFI_OPERATOR"  />
+        </property>
+        <property name="verifiReqDate" type="java.sql.Date">
+            <column name="VERIFI_REQ_DATE" />
+        </property>
+        <property name="lawyerStatus" type="java.lang.String">
+            <column name="lawyer_STATUS" />
+        </property>
+        <property name="lawyerOperator" type="java.lang.String">
+            <column name="lawyer_OPERATOR"  />
+        </property>
+        <property name="lawyerReqDate" type="java.sql.Date">
+            <column name="lawyer_REQ_DATE" />
+        </property>
+        <property name="verifiAmount" type="java.lang.Double">
+            <column name="VERIFI_AMOUNT" />
+        </property>
+        <property name="updateDate" type="java.sql.Date">
+            <column name="UPDATE_DATE" />
+        </property>
+        <property name="promisedRepayDate" type="java.sql.Date">
+            <column name="PROMISED_REPAY_DATE" />
+        </property>
+        <property name="assignDate" type="java.sql.Date">
+            <column name="assign_date" />
+        </property>
+    </class>
+</hibernate-mapping>

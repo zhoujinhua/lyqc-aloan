@@ -16,7 +16,7 @@ request.setAttribute("juid", juid);
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>渠道管理系统-缓存管理</title>
+    <title>催收大平台-缓存管理</title>
     <jsp:include page="/view/common/head.jsp"></jsp:include>
     <script src="${path}/static/weblib/ace/js/ace.js" type="text/javascript" charset="utf-8"></script>
 	<script src="${path}/static/weblib/beautify/beautify.js" type="text/javascript" charset="utf-8"></script>

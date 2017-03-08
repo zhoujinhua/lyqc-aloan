@@ -12,11 +12,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.rdfs.core.bean.Page;
+import com.rdfs.core.utils.AuthUtil;
 import com.rdfs.hibernate.enums.OperMode;
 import com.rdfs.lyqc.common.dto.TreeDto;
 import com.rdfs.lyqc.common.utils.JacksonUtil;
@@ -35,11 +35,8 @@ public class DepartmentController {
 	@RequestMapping("list")
 	@ResponseBody
 	public Map<String,Object> list(HttpServletRequest request, SyDepartment department){
-		int length = ServletRequestUtils.getIntParameter(request, "length", 10);
-		int start = ServletRequestUtils.getIntParameter(request, "start", 0);
-		int pn = start == 0?1:(start/length+1);
 		Map<String, Object> map = new HashMap<String,Object>();
-		Page<SyDepartment> page = departmentService.pageList(department, pn, OperMode.LIKE, "departmentName","status");
+		Page page = departmentService.pageList(department, AuthUtil.getPage(request), OperMode.LIKE, "departmentName","status");
 		map.put("aaData", page.getItems());
 		map.put("recordsTotal", page.getCount());	
 	    map.put("recordsFiltered", page.getCount());

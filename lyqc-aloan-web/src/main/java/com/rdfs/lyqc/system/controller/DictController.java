@@ -9,11 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.rdfs.core.bean.Page;
+import com.rdfs.core.utils.AuthUtil;
 import com.rdfs.hibernate.enums.OperMode;
 import com.rdfs.lyqc.cache.service.CacheMasterService;
 import com.rdfs.lyqc.system.entity.SyDictItem;
@@ -35,11 +35,8 @@ public class DictController {
     @RequestMapping("list")
 	@ResponseBody
 	public Map<String,Object> list(HttpServletRequest request, SyDictItem arg){
-		int length = ServletRequestUtils.getIntParameter(request, "length", 10);
-		int start = ServletRequestUtils.getIntParameter(request, "start", 0);
-		int pn = start == 0?1:(start/length+1);
 		Map<String, Object> map = new HashMap<String,Object>();
-		Page<SyDictItem> page = dictItemService.pageList(arg, pn, OperMode.LIKE, "name","code","status","key");
+		Page page = dictItemService.pageList(arg, AuthUtil.getPage(request), OperMode.LIKE, "name","code","status","key");
 		
 		map.put("aaData", page.getItems());
 		map.put("recordsTotal", page.getCount());

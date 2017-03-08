@@ -20,7 +20,7 @@ request.setAttribute("user", user);
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>美利车金融-渠道管理系统</title>
+    <title>美利车金融-催收大平台</title>
     <jsp:include page="common/head.jsp"></jsp:include>
     <link href="${path }/static/weblib/charisma/css/bootstrap-cerulean.min.css" rel="stylesheet" type="text/css" id="bs-css">
     <script src="${path }/static/js/index.init.js" type="text/javascript"></script>

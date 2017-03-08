@@ -31,9 +31,10 @@ var setting_modal = {
 	},
 	callback : {}
 }; 
-
+var i = 0;
 function ztree_input(type, url, obj){
-	var date = moment(new Date()).format("YYYYMMDDHHMISS");
+	var date = moment(new Date()).format("YYYYMMDDHHMISS") + i;
+	i ++;
 	var contentId = "ztree_input_content_"+date;
 	var areaId = "ztree_input_area_"+date;
 	setting_input.check.chkStyle = type;
@@ -42,7 +43,7 @@ function ztree_input(type, url, obj){
 		  url: url,
 		  success: function(data){
 			  var html = '<div id="'+contentId+'" class="ztree_input_content" style="display:none; position: absolute;">'+
-					  		'<ul id="'+areaId+'" class="ztree" style="margin-top:0; width:180px; height: 300px;"></ul>'+
+					  		'<ul id="'+areaId+'" class="ztree" style="margin-top:0; width:360px; height: auto; border-radius: 4px; background: white none repeat scroll 0% 0%; border: 1px solid;"></ul>'+
 					  		'</div>';
 			  $("body").append(html);
 			  obj.attr("data-ztree-id",contentId);
@@ -78,7 +79,7 @@ function onCheck(e, treeId, treeNode) {
 	if (v.length > 0 ) v = v.substring(0, v.length-1);
 	if (d.length > 0 ) d = d.substring(0, d.length-1);
 	$("input[data-ztree-id='"+data_ztree_id+"']").val(v);
-	$("input[data-ztree-id='"+data_ztree_id+"']").siblings(":hidden").val(v);
+	$("input[data-ztree-id='"+data_ztree_id+"']").siblings(":hidden").val(d);
 }
 function hideMenu() {
 	$(".ztree_input_content").fadeOut("fast");

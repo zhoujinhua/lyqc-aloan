@@ -14,11 +14,15 @@ import com.rdfs.core.contants.Constants;
 import com.rdfs.core.utils.StringUtils;
 import com.rdfs.hibernate.service.impl.HibernateServiceSupport;
 import com.rdfs.lyqc.cache.service.CacheUserService;
+import com.rdfs.lyqc.cache.utils.CacheCxtUtil;
+import com.rdfs.lyqc.common.dto.TreeDto;
 import com.rdfs.lyqc.common.utils.Md5Util;
 import com.rdfs.lyqc.system.entity.SyDepartment;
+import com.rdfs.lyqc.system.entity.SyDictItem;
 import com.rdfs.lyqc.system.entity.SyPermSet;
 import com.rdfs.lyqc.system.entity.SyUser;
 import com.rdfs.lyqc.system.entity.SyUserDepartment;
+import com.rdfs.lyqc.system.service.TreeService;
 import com.rdfs.lyqc.system.service.UserService;
 
 @Service
@@ -26,6 +30,9 @@ public class UserServiceImpl extends HibernateServiceSupport implements UserServ
 
 	@Autowired
 	private CacheUserService cacheUserService;
+	
+	@Autowired
+	private TreeService treeService;
 	
 	@Override
 	public void updateUser(SyUser user) {
@@ -164,6 +171,20 @@ public class UserServiceImpl extends HibernateServiceSupport implements UserServ
 			return (T) user;
 		}
 		return super.getEntityByCode(type, id, init);
+	}
+
+	@Override
+	public List<TreeDto> formatUserTree(SyUser user, List<SyUser> userList) throws Exception {
+		List<SyDictItem> dictItems = CacheCxtUtil.getDicList("_user_type");
+		List<TreeDto> treeList = treeService.getList(dictItems, "code", "desc", null, null);
+		
+		if(StringUtils.isBlankObj(user)){
+			user = new SyUser(null, Constants.IS.YES);
+		}
+		List<SyUser> users = getList(user,"userStatus");
+		
+		treeList.addAll(treeService.getList(users, "userId", "trueName", "userType", userList));
+		return treeList;
 	}
 	
 	

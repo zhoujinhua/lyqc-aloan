@@ -1,9 +1,7 @@
 package com.rdfs.lyqc.system.service.impl;
 
 import java.util.Date;
-import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rdfs.core.bean.Page;
@@ -11,19 +9,12 @@ import com.rdfs.core.bean.UserDto;
 import com.rdfs.core.contants.Constants;
 import com.rdfs.core.utils.RdfsUtils;
 import com.rdfs.hibernate.service.impl.HibernateServiceSupport;
-import com.rdfs.lyqc.cache.utils.CacheCxtUtil;
-import com.rdfs.lyqc.common.dto.TreeDto;
 import com.rdfs.lyqc.system.entity.SyAnnouncement;
-import com.rdfs.lyqc.system.entity.SyDictItem;
 import com.rdfs.lyqc.system.entity.SyUser;
 import com.rdfs.lyqc.system.service.AnnouncementService;
-import com.rdfs.lyqc.system.service.TreeService;
 
 @Service
 public class AnnouncementServiceImpl extends HibernateServiceSupport implements AnnouncementService {
-
-	@Autowired
-	private TreeService treeService;
 	
 	@Override
 	public SyAnnouncement saveAnnouncement(SyAnnouncement announcement, UserDto user) {
@@ -67,9 +58,9 @@ public class AnnouncementServiceImpl extends HibernateServiceSupport implements 
 	}
 	
 	@Override
-	public Page<SyAnnouncement> pageList(SyAnnouncement announcement, UserDto user, int pn) {
+	public Page pageList(SyAnnouncement announcement, UserDto user, Page page) {
 		String hql = genHql(announcement, user);
-		return pageList(pn, hql);
+		return pageList(page, hql);
 	}
 
 	@Override
@@ -87,17 +78,5 @@ public class AnnouncementServiceImpl extends HibernateServiceSupport implements 
 			}
 		}
 		
-	}
-
-	@Override
-	public List<TreeDto> formatUserTree(SyAnnouncement announcement) throws Exception {
-		List<SyDictItem> dictItems = CacheCxtUtil.getDicList("_user_type");
-		List<TreeDto> treeList = treeService.getList(dictItems, "code", "desc", null, null);
-		
-		SyUser syUser = new SyUser(null, Constants.IS.YES);
-		List<SyUser> users = getList(syUser,"userStatus");
-		
-		treeList.addAll(treeService.getList(users, "userId", "trueName", "userType", announcement.getUsers()));
-		return treeList;
 	}
 }

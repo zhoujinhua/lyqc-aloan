@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.rdfs.lyqc.dianc.entity.DhCollectionReg" table="DH_COLLECTION_REG" >
+        <id name="id" type="java.lang.String">
+            <column name="ID" />
+        </id>
+        <property name="appCode" type="java.lang.String">
+            <column name="APP_CODE"  />
+        </property>
+        <many-to-one name="contactInfo" class="com.rdfs.lyqc.carloan.entity.DmContactInfo" lazy="false" not-found="ignore">
+            <column name="PROPPSER_ID"></column>
+        </many-to-one>
+        <property name="collStaff" type="java.lang.String">
+            <column name="COLL_STAFF" />
+        </property>
+        <property name="remarkTime" type="java.sql.Date">
+            <column name="REMARK_TIME"  />
+        </property>
+        <property name="promisedRepayDate" type="java.sql.Date">
+            <column name="PROMISED_REPAY_DATE" />
+        </property>
+        <property name="collRemark" type="java.lang.String">
+            <column name="COLL_REMARK"  />
+        </property>
+        <property name="isCollReg" type="java.lang.String">
+            <column name="IS_COLL_REG" />
+        </property>
+        <property name="weekRemark" type="java.lang.String">
+            <column name="WEEK_REMARK" />
+        </property>
+        <property name="proceStatus" type="java.lang.String">
+            <column name="PROCE_STATUS"  />
+        </property>
+        <property name="collStatus" type="java.lang.String">
+            <column name="COLL_STATUS"  />
+        </property>
+    </class>
+</hibernate-mapping>

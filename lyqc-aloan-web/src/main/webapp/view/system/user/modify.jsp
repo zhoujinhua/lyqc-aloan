@@ -12,7 +12,7 @@ request.setAttribute("basePath", basePath);
 <html lang="zh">
 <head>
 <meta charset="utf-8">
-<title>渠道管理系统-用户管理</title>
+<title>催收大平台-用户管理</title>
 <jsp:include page="/view/common/head.jsp"></jsp:include>
 
 </head>

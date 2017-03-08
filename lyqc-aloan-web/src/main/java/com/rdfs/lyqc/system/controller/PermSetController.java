@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -38,11 +37,8 @@ public class PermSetController {
 	@RequestMapping("list")
 	@ResponseBody
 	public Map<String,Object> list(HttpServletRequest request, SyPermSet permSet){
-		int length = ServletRequestUtils.getIntParameter(request, "length", 10);
-		int start = ServletRequestUtils.getIntParameter(request, "start", 0);
-		int pn = start == 0?1:(start/length+1);
 		Map<String, Object> map = new HashMap<String,Object>();
-		Page<SyPermSet> page = permSetService.pageList(permSet, pn, OperMode.LIKE, "permName","permStatus");
+		Page page = permSetService.pageList(permSet, AuthUtil.getPage(request), OperMode.LIKE, "permName","permStatus");
 		
 		map.put("aaData", page.getItems());
 		map.put("recordsTotal", page.getCount());

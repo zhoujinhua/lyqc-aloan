@@ -15,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,6 +29,7 @@ import com.rdfs.lyqc.common.dto.TreeDto;
 import com.rdfs.lyqc.common.utils.JacksonUtil;
 import com.rdfs.lyqc.system.entity.SyAnnouncement;
 import com.rdfs.lyqc.system.service.AnnouncementService;
+import com.rdfs.lyqc.system.service.UserService;
 
 
 @Controller
@@ -38,6 +38,9 @@ public class AnnouncementController {
 
 	@Autowired
 	private AnnouncementService announcementService;
+	
+	@Autowired
+	private UserService userService;
 	
 	private Logger logger = LoggerFactory.getLogger(AnnouncementController.class);
 	
@@ -53,10 +56,10 @@ public class AnnouncementController {
 			UserDto user = AuthUtil.getUserDto(request);
 			announcement.setIsTop(Constants.IS.YES);
 			announcement.setIsPublish(Constants.IS.YES);
-	        Page<SyAnnouncement> page = announcementService.pageList(announcement,user, 1);
+	        Page page = announcementService.pageList(announcement,user, new Page(1, 0));
 	        
 	        if(page.getItems()!=null && !page.getItems().isEmpty()){
-	        	announcement = page.getItems().get(0);
+	        	announcement = (SyAnnouncement) page.getItems().get(0);
 	        }
 		}
 		request.setAttribute("announcement", announcement);
@@ -72,13 +75,10 @@ public class AnnouncementController {
 	@RequestMapping("myList")
 	@ResponseBody
 	public Map<String, Object> myList(HttpServletRequest request,HttpServletResponse response){
-		int length = ServletRequestUtils.getIntParameter(request, "length", 10);
-		int start = ServletRequestUtils.getIntParameter(request, "start", 0);
-		int pn = start == 0?1:(start/length+1);
 		UserDto user = AuthUtil.getUserDto(request);
 		
 		Map<String, Object> map = new HashMap<String,Object>();
-        Page<SyAnnouncement> page = announcementService.pageList(null,user, pn);
+        Page page = announcementService.pageList(null,user, AuthUtil.getPage(request));
         
         map.put("aaData", page.getItems());
         map.put("recordsTotal", page.getCount());	
@@ -89,11 +89,8 @@ public class AnnouncementController {
 	@RequestMapping("list")
 	@ResponseBody
 	public Map<String,Object> list(HttpServletRequest request, SyAnnouncement announcement){
-		int length = ServletRequestUtils.getIntParameter(request, "length", 10);
-		int start = ServletRequestUtils.getIntParameter(request, "start", 0);
-		int pn = start == 0?1:(start/length+1);
 		Map<String, Object> map = new HashMap<String,Object>();
-		Page<SyAnnouncement> page = announcementService.pageList(announcement, pn, OperMode.LIKE, "headline","postType","isPublish");
+		Page page = announcementService.pageList(announcement, AuthUtil.getPage(request), OperMode.LIKE, "headline","postType","isPublish");
 		
 		map.put("aaData", page.getItems());
 		map.put("recordsTotal", page.getCount());	
@@ -148,13 +145,13 @@ public class AnnouncementController {
 		return "system/announcement/view";
 	}
 	
-	@RequestMapping("viewUserAjax")
+	@RequestMapping("userTree")
 	public void viewUserAjax(HttpServletRequest request,HttpServletResponse response,SyAnnouncement announcement){
 		PrintWriter pw = null;
 		try{
 			pw = response.getWriter();
 			announcement = announcementService.getEntityById(SyAnnouncement.class, announcement.getId(), true);
-			List<TreeDto> list = announcementService.formatUserTree(announcement);
+			List<TreeDto> list = userService.formatUserTree(null, announcement.getUsers());
 			pw.print(JacksonUtil.toJson(list));
 		} catch(Exception e){
 			logger.error("加载失败,错误信息：",e);

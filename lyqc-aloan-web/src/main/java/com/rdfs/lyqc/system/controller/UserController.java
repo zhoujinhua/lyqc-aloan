@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -48,11 +47,8 @@ public class UserController {
 	@RequestMapping("list")
 	@ResponseBody
 	public Map<String,Object> list(HttpServletRequest request ,SyUser user){
-		int length = ServletRequestUtils.getIntParameter(request, "length", 10);
-		int start = ServletRequestUtils.getIntParameter(request, "start", 0);
-		int pn = start == 0?1:(start/length+1);
 		Map<String, Object> map = new HashMap<String,Object>();
-		Page<SyUser> page = userService.pageList(user, pn, OperMode.LIKE, "userStatus","userName","trueName","userType");
+		Page page = userService.pageList(user, AuthUtil.getPage(request), OperMode.LIKE, "userStatus","userName","trueName","userType");
 		
 		map.put("aaData", page.getItems());
 		map.put("recordsTotal", page.getCount());
@@ -192,5 +188,17 @@ public class UserController {
 			request.setAttribute("msg","权限集设置失败,"+e.getMessage());
 		}
 		return "system/user/list";
+	}
+	
+	@RequestMapping("userTree")
+	public void viewUserAjax(HttpServletRequest request,HttpServletResponse response,SyUser user){
+		PrintWriter pw = null;
+		try{
+			pw = response.getWriter();
+			List<TreeDto> list = userService.formatUserTree(user, null);
+			pw.print(JacksonUtil.toJson(list));
+		} catch(Exception e){
+			logger.error("加载失败,错误信息：",e);
+		}
 	}
 }
