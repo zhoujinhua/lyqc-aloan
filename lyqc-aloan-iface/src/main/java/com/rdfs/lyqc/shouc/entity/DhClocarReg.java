@@ -9,7 +9,7 @@ public class DhClocarReg implements java.io.Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 595644164589096649L;
-	private String id;
+	private Integer id;
 	private String appCode;
 	private String collStaff;
 	private Date remarkTime;
@@ -19,11 +19,11 @@ public class DhClocarReg implements java.io.Serializable {
 	private String requestStatus;
 	private Date updateTime;
 
-	public String getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

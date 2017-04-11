@@ -2,8 +2,8 @@ package com.rdfs.lyqc.cache.service;
 
 import java.util.List;
 
-import com.rdfs.core.bean.UserDto;
-import com.rdfs.hibernate.service.HibernateService;
+import com.rdfs.framework.core.bean.UserDto;
+import com.rdfs.framework.hibernate.service.HibernateService;
 import com.rdfs.lyqc.system.entity.SyUser;
 
 public interface CacheUserService extends HibernateService{

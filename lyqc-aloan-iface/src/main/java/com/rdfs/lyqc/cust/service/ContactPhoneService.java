@@ -2,8 +2,8 @@ package com.rdfs.lyqc.cust.service;
 
 import java.util.List;
 
-import com.rdfs.hibernate.service.HibernateService;
-import com.rdfs.lyqc.common.dto.TreeDto;
+import com.rdfs.framework.core.bean.TreeDto;
+import com.rdfs.framework.hibernate.service.HibernateService;
 import com.rdfs.lyqc.cust.entity.DhContactPhone;
 
 public interface ContactPhoneService extends HibernateService {

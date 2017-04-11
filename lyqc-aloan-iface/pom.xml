@@ -12,29 +12,25 @@
   <name>lyqc-aloan-iface</name>
   <dependencies>
   		<dependency>
-  			<groupId>com.lyqc</groupId>
-  			<artifactId>lyqc-aloan-common</artifactId>
-  			<version>1.0.0</version>
-  		</dependency>
-  		<dependency>
+          <groupId>com.rdfs</groupId>
+          <artifactId>rdfs-framework-orm</artifactId>
+          <version>${project.version}</version>
+      </dependency>
+      <dependency>
   			<groupId>com.rdfs</groupId>
-  			<artifactId>rdfs-orm</artifactId>
+  			<artifactId>rdfs-framework-workflow</artifactId>
+  			<version>1.0.0</version>
+  	  </dependency>
+      <dependency>
+  			<groupId>com.rdfs</groupId>
+  			<artifactId>rdfs-framework-auth</artifactId>
   			<version>1.0.0</version>
   		</dependency>
-		<dependency>  
-            <groupId>com.fasterxml.jackson.core</groupId>  
-            <artifactId>jackson-annotations</artifactId>  
-        </dependency>  
-  
-        <dependency>  
-            <groupId>com.fasterxml.jackson.core</groupId>  
-            <artifactId>jackson-core</artifactId>  
-        </dependency>  
-        <dependency>  
-            <groupId>com.fasterxml.jackson.core</groupId>  
-            <artifactId>jackson-databind</artifactId>  
-        </dependency>
-
+      <dependency>
+  			<groupId>com.rdfs</groupId>
+  			<artifactId>rdfs-framework-quartz</artifactId>
+  			<version>1.0.0</version>
+  		</dependency>
   </dependencies>
   <build>
   	 <plugins>

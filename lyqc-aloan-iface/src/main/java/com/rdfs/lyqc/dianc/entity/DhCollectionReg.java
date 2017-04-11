@@ -11,7 +11,7 @@ public class DhCollectionReg implements Serializable{
 	 * 电话催收登记表
 	 */
 	private static final long serialVersionUID = 1L;
-	private String id;
+	private Integer id;
 	private String appCode;
 	private DmContactInfo contactInfo;
 	private String collStaff;
@@ -22,10 +22,12 @@ public class DhCollectionReg implements Serializable{
 	private String isCollReg;
 	private String proceStatus;
 	private String collStatus;
-	public String getId() {
+	
+
+	public Integer getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getAppCode() {

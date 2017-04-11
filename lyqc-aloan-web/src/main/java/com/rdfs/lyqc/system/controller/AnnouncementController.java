@@ -20,13 +20,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import com.rdfs.core.bean.Page;
-import com.rdfs.core.bean.UserDto;
-import com.rdfs.core.contants.Constants;
-import com.rdfs.core.utils.AuthUtil;
-import com.rdfs.hibernate.enums.OperMode;
-import com.rdfs.lyqc.common.dto.TreeDto;
-import com.rdfs.lyqc.common.utils.JacksonUtil;
+import com.rdfs.framework.core.bean.TreeDto;
+import com.rdfs.framework.core.bean.UserDto;
+import com.rdfs.framework.core.contants.Constants;
+import com.rdfs.framework.core.utils.AuthUtil;
+import com.rdfs.framework.core.utils.JacksonUtil;
+import com.rdfs.framework.hibernate.bean.Page;
+import com.rdfs.framework.hibernate.enums.OperMode;
+import com.rdfs.framework.hibernate.utils.PageUtil;
 import com.rdfs.lyqc.system.entity.SyAnnouncement;
 import com.rdfs.lyqc.system.service.AnnouncementService;
 import com.rdfs.lyqc.system.service.UserService;
@@ -78,7 +79,7 @@ public class AnnouncementController {
 		UserDto user = AuthUtil.getUserDto(request);
 		
 		Map<String, Object> map = new HashMap<String,Object>();
-        Page page = announcementService.pageList(null,user, AuthUtil.getPage(request));
+        Page page = announcementService.pageList(null,user, PageUtil.getPage(request));
         
         map.put("aaData", page.getItems());
         map.put("recordsTotal", page.getCount());	
@@ -90,7 +91,7 @@ public class AnnouncementController {
 	@ResponseBody
 	public Map<String,Object> list(HttpServletRequest request, SyAnnouncement announcement){
 		Map<String, Object> map = new HashMap<String,Object>();
-		Page page = announcementService.pageList(announcement, AuthUtil.getPage(request), OperMode.LIKE, "headline","postType","isPublish");
+		Page page = announcementService.pageList(announcement, PageUtil.getPage(request), OperMode.LIKE, "headline","postType","isPublish");
 		
 		map.put("aaData", page.getItems());
 		map.put("recordsTotal", page.getCount());	

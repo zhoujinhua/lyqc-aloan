@@ -1,8 +1,8 @@
 package com.rdfs.lyqc.system.service;
 
-import com.rdfs.core.bean.Page;
-import com.rdfs.core.bean.UserDto;
-import com.rdfs.hibernate.service.HibernateService;
+import com.rdfs.framework.core.bean.UserDto;
+import com.rdfs.framework.hibernate.bean.Page;
+import com.rdfs.framework.hibernate.service.HibernateService;
 import com.rdfs.lyqc.system.entity.SyAnnouncement;
 
 public interface AnnouncementService extends HibernateService {

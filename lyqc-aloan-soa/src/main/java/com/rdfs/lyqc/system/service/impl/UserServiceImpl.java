@@ -10,19 +10,20 @@ import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.rdfs.core.contants.Constants;
-import com.rdfs.core.utils.StringUtils;
-import com.rdfs.hibernate.service.impl.HibernateServiceSupport;
+import com.rdfs.framework.auth.entity.SyPermSet;
+import com.rdfs.framework.cache.service.CacheParamsService;
+import com.rdfs.framework.core.bean.TreeDto;
+import com.rdfs.framework.core.contants.Constants;
+import com.rdfs.framework.core.service.TreeService;
+import com.rdfs.framework.core.utils.Md5Util;
+import com.rdfs.framework.core.utils.StringUtils;
+import com.rdfs.framework.hibernate.enums.OperMode;
+import com.rdfs.framework.hibernate.service.impl.HibernateServiceSupport;
+import com.rdfs.framework.taglib.bean.DictItem;
 import com.rdfs.lyqc.cache.service.CacheUserService;
-import com.rdfs.lyqc.cache.utils.CacheCxtUtil;
-import com.rdfs.lyqc.common.dto.TreeDto;
-import com.rdfs.lyqc.common.utils.Md5Util;
 import com.rdfs.lyqc.system.entity.SyDepartment;
-import com.rdfs.lyqc.system.entity.SyDictItem;
-import com.rdfs.lyqc.system.entity.SyPermSet;
 import com.rdfs.lyqc.system.entity.SyUser;
 import com.rdfs.lyqc.system.entity.SyUserDepartment;
-import com.rdfs.lyqc.system.service.TreeService;
 import com.rdfs.lyqc.system.service.UserService;
 
 @Service
@@ -30,6 +31,8 @@ public class UserServiceImpl extends HibernateServiceSupport implements UserServ
 
 	@Autowired
 	private CacheUserService cacheUserService;
+	
+	private CacheParamsService cacheParamsService;
 	
 	@Autowired
 	private TreeService treeService;
@@ -166,26 +169,36 @@ public class UserServiceImpl extends HibernateServiceSupport implements UserServ
 	@Override
 	@SuppressWarnings("unchecked")
 	public <T extends Serializable> T getEntityByCode(Class<T> type, String id, boolean init) {
-		SyUser user = cacheUserService.getUser(id);
+		/*SyUser user = cacheUserService.getUser(id);
 		if(!StringUtils.isBlankObj(user)){
 			return (T) user;
-		}
+		}*/
 		return super.getEntityByCode(type, id, init);
 	}
 
 	@Override
 	public List<TreeDto> formatUserTree(SyUser user, List<SyUser> userList) throws Exception {
-		List<SyDictItem> dictItems = CacheCxtUtil.getDicList("_user_type");
-		List<TreeDto> treeList = treeService.getList(dictItems, "code", "desc", null, null);
+		List<DictItem> dictItems = cacheParamsService.getDicList("_user_type");
+		List<TreeDto> treeList = treeService.getList(dictItems, true, "code", "desc", null, null);
 		
 		if(StringUtils.isBlankObj(user)){
 			user = new SyUser(null, Constants.IS.YES);
 		}
 		List<SyUser> users = getList(user,"userStatus");
 		
-		treeList.addAll(treeService.getList(users, "userId", "trueName", "userType", userList));
+		treeList.addAll(treeService.getList(users, false, "userId", "trueName", "userType", userList));
 		return treeList;
 	}
-	
+
+	@Override
+	public List<TreeDto> getPermSetTree(SyUser user) throws Exception {
+		user = getEntityByCode(SyUser.class,user.getUserId(),true);
+		SyPermSet permset = new SyPermSet();
+		permset.setPermStatus(Constants.IS.YES);
+		
+		List<SyPermSet> permSets = getList(permset,OperMode.EQ, "permStatus");
+		List<TreeDto> treeList = treeService.getList(permSets, false, "id", "permName", null, user.getPermSets());
+		return treeList;
+	}
 	
 }

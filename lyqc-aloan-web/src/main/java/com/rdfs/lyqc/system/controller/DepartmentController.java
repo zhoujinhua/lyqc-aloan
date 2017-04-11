@@ -15,11 +15,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.rdfs.core.bean.Page;
-import com.rdfs.core.utils.AuthUtil;
-import com.rdfs.hibernate.enums.OperMode;
-import com.rdfs.lyqc.common.dto.TreeDto;
-import com.rdfs.lyqc.common.utils.JacksonUtil;
+import com.rdfs.framework.core.bean.TreeDto;
+import com.rdfs.framework.core.utils.JacksonUtil;
+import com.rdfs.framework.hibernate.bean.Page;
+import com.rdfs.framework.hibernate.enums.OperMode;
+import com.rdfs.framework.hibernate.utils.PageUtil;
 import com.rdfs.lyqc.system.entity.SyDepartment;
 import com.rdfs.lyqc.system.service.DepartmentService;
 
@@ -36,7 +36,7 @@ public class DepartmentController {
 	@ResponseBody
 	public Map<String,Object> list(HttpServletRequest request, SyDepartment department){
 		Map<String, Object> map = new HashMap<String,Object>();
-		Page page = departmentService.pageList(department, AuthUtil.getPage(request), OperMode.LIKE, "departmentName","status");
+		Page page = departmentService.pageList(department, PageUtil.getPage(request), OperMode.LIKE, "departmentName","status");
 		map.put("aaData", page.getItems());
 		map.put("recordsTotal", page.getCount());	
 	    map.put("recordsFiltered", page.getCount());

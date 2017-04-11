@@ -31,8 +31,8 @@
 		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
 		<property name="converters">
             <set>
-                <bean class="com.rdfs.core.converter.EnumConverterFactory" />
-                <bean class="com.rdfs.core.converter.DateConverterFactory" />
+                <bean class="com.rdfs.framework.core.converter.EnumConverterFactory" />
+                <bean class="com.rdfs.framework.core.converter.DateConverterFactory" />
             </set>
         </property>
 	</bean>
@@ -51,7 +51,7 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/*/*" />
-			<bean class="com.rdfs.core.interceptor.DispatcherContextInterceptor"></bean>
+			<bean class="com.rdfs.framework.core.interceptor.DispatcherContextInterceptor"></bean>
 		</mvc:interceptor>
 		
 	</mvc:interceptors>

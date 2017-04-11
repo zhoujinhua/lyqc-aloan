@@ -15,17 +15,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.rdfs.core.bean.Page;
-import com.rdfs.core.bean.UserDto;
-import com.rdfs.core.contants.Constants;
-import com.rdfs.core.utils.AuthUtil;
-import com.rdfs.core.utils.RdfsUtils;
-import com.rdfs.hibernate.enums.OperMode;
+import com.rdfs.framework.auth.entity.SyPermSet;
+import com.rdfs.framework.cache.service.CacheResourceService;
+import com.rdfs.framework.core.bean.TreeDto;
+import com.rdfs.framework.core.bean.UserDto;
+import com.rdfs.framework.core.contants.Constants;
+import com.rdfs.framework.core.utils.AuthUtil;
+import com.rdfs.framework.core.utils.JacksonUtil;
+import com.rdfs.framework.core.utils.JsonUtil;
+import com.rdfs.framework.core.utils.RdfsUtils;
+import com.rdfs.framework.hibernate.bean.Page;
+import com.rdfs.framework.hibernate.enums.OperMode;
+import com.rdfs.framework.hibernate.utils.PageUtil;
 import com.rdfs.lyqc.cache.service.CacheUserService;
-import com.rdfs.lyqc.common.dto.TreeDto;
-import com.rdfs.lyqc.common.utils.JacksonUtil;
 import com.rdfs.lyqc.system.entity.SyUser;
-import com.rdfs.lyqc.system.service.PermSetService;
 import com.rdfs.lyqc.system.service.UserService;
 
 
@@ -42,13 +45,13 @@ public class UserController {
 	private CacheUserService cacheUserDataService;
 	
 	@Autowired
-	private PermSetService permSetService;
+	private CacheResourceService cacheResourceService;
 	
 	@RequestMapping("list")
 	@ResponseBody
 	public Map<String,Object> list(HttpServletRequest request ,SyUser user){
 		Map<String, Object> map = new HashMap<String,Object>();
-		Page page = userService.pageList(user, AuthUtil.getPage(request), OperMode.LIKE, "userStatus","userName","trueName","userType");
+		Page page = userService.pageList(user, PageUtil.getPage(request), OperMode.LIKE, "userStatus","userName","trueName","userType");
 		
 		map.put("aaData", page.getItems());
 		map.put("recordsTotal", page.getCount());
@@ -169,7 +172,7 @@ public class UserController {
 		try {
 			pw = response.getWriter();
 			
-			List<TreeDto> list = permSetService.getPermSetTree(user);
+			List<TreeDto> list = userService.getPermSetTree(user);
 			pw.print(JacksonUtil.toJson(list));
 		} catch (Exception e) {
 			logger.error("生成权限集树失败.",e);
@@ -190,15 +193,22 @@ public class UserController {
 		return "system/user/list";
 	}
 	
-	@RequestMapping("userTree")
-	public void viewUserAjax(HttpServletRequest request,HttpServletResponse response,SyUser user){
+	/**
+	 * 用户登录后加载菜单
+	 */
+	@RequestMapping("getMenuJson")
+	public void getMenuJson(HttpServletRequest request, HttpServletResponse response){
 		PrintWriter pw = null;
 		try{
 			pw = response.getWriter();
-			List<TreeDto> list = userService.formatUserTree(user, null);
-			pw.print(JacksonUtil.toJson(list));
+
+			UserDto userDto = AuthUtil.getUserDto(request);
+			SyUser user = userService.getEntityByCode(SyUser.class, userDto.getUserId(), true);
+			List<SyPermSet> list = user.getPermSets();
+			Object ob = cacheResourceService.getMenuTree(list);
+			pw.print(JsonUtil.toJson(ob));
 		} catch(Exception e){
-			logger.error("加载失败,错误信息：",e);
+			logger.error("任务失败,错误信息：",e);
 		}
 	}
 }

@@ -2,9 +2,9 @@ package com.rdfs.lyqc.system.service;
 
 import java.util.List;
 
-import com.rdfs.hibernate.service.HibernateService;
+import com.rdfs.framework.core.bean.TreeDto;
+import com.rdfs.framework.hibernate.service.HibernateService;
 import com.rdfs.lyqc.system.entity.SyDepartment;
-import com.rdfs.lyqc.common.dto.TreeDto;
 
 public interface DepartmentService extends HibernateService {
 

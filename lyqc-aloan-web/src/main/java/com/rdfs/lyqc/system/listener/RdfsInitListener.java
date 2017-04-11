@@ -2,14 +2,17 @@ package com.rdfs.lyqc.system.listener;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
 
-import com.rdfs.core.contants.Constants;
-import com.rdfs.core.redis.JedisUtil;
+import com.rdfs.framework.core.contants.Constants;
+import com.rdfs.framework.core.redis.JedisUtil;
 import com.rdfs.lyqc.cache.utils.CacheCxtUtil;
 
 /**
  * <b>系统启动监听器</b>
  */
+
+@WebListener
 public class RdfsInitListener implements ServletContextListener{
 
 	@Override

@@ -168,12 +168,18 @@
         </dependency>  
   
         <!-- servlet -->  
-        <dependency>  
+        <!-- <dependency>  
             <groupId>javax.servlet</groupId>  
             <artifactId>servlet-api</artifactId>  
             <version>3.0-alpha-1</version>
 			<scope>provided</scope>
-		</dependency>
+		</dependency> -->
+		<dependency>  
+            <groupId>javax.servlet</groupId>  
+            <artifactId>javax.servlet-api</artifactId>  
+            <version>3.1.0</version>  
+            <scope>provided</scope>  
+        </dependency>  
   
         <dependency>  
             <groupId>javax.servlet</groupId>  
@@ -319,7 +325,7 @@
 			 <plugin>  
 	            <groupId>org.apache.maven.plugins</groupId>  
 	            <artifactId>maven-compiler-plugin</artifactId>  
-	            <version>2.3.2</version>  
+	            <version>3.1</version>  
 	            <configuration>  
 	                <source>1.8</source>  
 	                <target>1.8</target>  

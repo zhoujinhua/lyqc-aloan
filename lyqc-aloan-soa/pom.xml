@@ -12,8 +12,13 @@
   <name>lyqc-aloan-soa</name>
   <dependencies>
   		<dependency>
+		  <groupId>com.lyqc</groupId>
+		  <artifactId>lyqc-aloan-common</artifactId>
+		  <version>1.0.0</version>
+	  </dependency>
+  		<dependency>
   			<groupId>com.rdfs</groupId>
-  			<artifactId>rdfs-orm</artifactId>
+  			<artifactId>rdfs-framework-orm</artifactId>
   			<version>1.0.0</version>
   		</dependency>
   		<dependency>
@@ -27,7 +32,7 @@
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
+			<artifactId>javax.servlet-api</artifactId>
 		</dependency>
   </dependencies>
   <build>

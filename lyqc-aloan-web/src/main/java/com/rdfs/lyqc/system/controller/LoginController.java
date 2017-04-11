@@ -11,14 +11,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.rdfs.core.bean.UserDto;
-import com.rdfs.core.contants.Constants;
-import com.rdfs.core.utils.AuthUtil;
-import com.rdfs.core.utils.RdfsId;
-import com.rdfs.core.utils.RdfsUtils;
+import com.rdfs.framework.core.bean.UserDto;
+import com.rdfs.framework.core.contants.Constants;
+import com.rdfs.framework.core.utils.AuthUtil;
+import com.rdfs.framework.core.utils.Md5Util;
+import com.rdfs.framework.core.utils.RdfsUtils;
+import com.rdfs.framework.core.utils.ReturnUitl;
+import com.rdfs.framework.core.utils.UUIDUtil;
 import com.rdfs.lyqc.cache.service.CacheUserService;
-import com.rdfs.lyqc.common.utils.Md5Util;
-import com.rdfs.lyqc.common.utils.ReturnUitl;
 import com.rdfs.lyqc.system.entity.SyUser;
 import com.rdfs.lyqc.system.service.UserService;
 
@@ -63,7 +63,7 @@ public class LoginController {
 					 return "redirect:/";
 				 }
 				 
-				 String juid = RdfsId.uuid();
+				 String juid = UUIDUtil.uuid();
 				 UserDto userDto = new UserDto();
 				 RdfsUtils.copyProperties(syUser, userDto);
 				 userDto.setJuid(juid);

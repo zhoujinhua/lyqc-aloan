@@ -41,6 +41,7 @@ public class DhOverdueDetail implements Serializable{
 	private String vehRevoveryNotice;
 	private String collPhoneStatus;
 	private String collPhoneOperator;
+	private String collPhoneOperatorName;
 	private String litionStatus;
 	private String litionOperator;
 	private Date litionReqDate;
@@ -315,6 +316,12 @@ public class DhOverdueDetail implements Serializable{
 	}
 	public void setCollPhoneOperator(String collPhoneOperator) {
 		this.collPhoneOperator = collPhoneOperator;
+	}
+	public String getCollPhoneOperatorName() {
+		return collPhoneOperatorName;
+	}
+	public void setCollPhoneOperatorName(String collPhoneOperatorName) {
+		this.collPhoneOperatorName = collPhoneOperatorName;
 	}
 	public String getVehdisOperator() {
 		return vehdisOperator;

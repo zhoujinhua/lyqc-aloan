@@ -6,12 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.rdfs.core.contants.Constants;
-import com.rdfs.hibernate.service.impl.HibernateServiceSupport;
-import com.rdfs.lyqc.common.dto.TreeDto;
+import com.rdfs.framework.core.bean.TreeDto;
+import com.rdfs.framework.core.contants.Constants;
+import com.rdfs.framework.core.service.TreeService;
+import com.rdfs.framework.hibernate.service.impl.HibernateServiceSupport;
 import com.rdfs.lyqc.system.entity.SyDepartment;
 import com.rdfs.lyqc.system.service.DepartmentService;
-import com.rdfs.lyqc.system.service.TreeService;
 
 @Service
 public class DepartmentServiceImpl extends HibernateServiceSupport implements DepartmentService {
@@ -36,7 +36,7 @@ public class DepartmentServiceImpl extends HibernateServiceSupport implements De
 	public List<TreeDto> genDeptTree() throws Exception {
 		String hql = "from SyDepartment where status = '" + Constants.IS.YES + "'";
 		List<SyDepartment> list = getList(hql);
-		List<TreeDto> treeList = treeService.getList(list, "departmentId", "departmentName", "parDepartment.departmentId", null);
+		List<TreeDto> treeList = treeService.getList(list, false, "departmentId", "departmentName", "parDepartment.departmentId", null);
 		return treeList;
 	}
 }

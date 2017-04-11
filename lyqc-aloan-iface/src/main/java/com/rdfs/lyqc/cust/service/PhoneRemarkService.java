@@ -1,6 +1,6 @@
 package com.rdfs.lyqc.cust.service;
 
-import com.rdfs.hibernate.service.HibernateService;
+import com.rdfs.framework.hibernate.service.HibernateService;
 import com.rdfs.lyqc.cust.entity.DhContactAddr;
 import com.rdfs.lyqc.cust.entity.DhPhoneRemark;
 

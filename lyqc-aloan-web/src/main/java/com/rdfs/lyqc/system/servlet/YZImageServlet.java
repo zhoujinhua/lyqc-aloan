@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.ServletException;
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -13,6 +14,7 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 import java.io.IOException;
 
+@WebServlet(name="imagepath", urlPatterns="/yzimage", loadOnStartup=1)
 public class YZImageServlet extends HttpServlet {
 	/**
 	 * 

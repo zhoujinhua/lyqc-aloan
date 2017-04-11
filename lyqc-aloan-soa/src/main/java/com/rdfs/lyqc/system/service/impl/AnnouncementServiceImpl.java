@@ -4,11 +4,11 @@ import java.util.Date;
 
 import org.springframework.stereotype.Service;
 
-import com.rdfs.core.bean.Page;
-import com.rdfs.core.bean.UserDto;
-import com.rdfs.core.contants.Constants;
-import com.rdfs.core.utils.RdfsUtils;
-import com.rdfs.hibernate.service.impl.HibernateServiceSupport;
+import com.rdfs.framework.core.bean.UserDto;
+import com.rdfs.framework.core.contants.Constants;
+import com.rdfs.framework.core.utils.RdfsUtils;
+import com.rdfs.framework.hibernate.bean.Page;
+import com.rdfs.framework.hibernate.service.impl.HibernateServiceSupport;
 import com.rdfs.lyqc.system.entity.SyAnnouncement;
 import com.rdfs.lyqc.system.entity.SyUser;
 import com.rdfs.lyqc.system.service.AnnouncementService;

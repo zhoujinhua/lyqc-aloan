@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.rdfs.framework.auth.entity.SyPermSet;
 
 
 /**

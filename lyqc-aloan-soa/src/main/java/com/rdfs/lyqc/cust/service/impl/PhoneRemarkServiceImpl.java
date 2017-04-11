@@ -4,10 +4,10 @@ import java.util.Date;
 
 import org.springframework.stereotype.Service;
 
-import com.rdfs.core.bean.UserDto;
-import com.rdfs.core.contants.Constants;
-import com.rdfs.core.utils.AuthUtil;
-import com.rdfs.hibernate.service.impl.HibernateServiceSupport;
+import com.rdfs.framework.core.bean.UserDto;
+import com.rdfs.framework.core.contants.Constants;
+import com.rdfs.framework.core.utils.AuthUtil;
+import com.rdfs.framework.hibernate.service.impl.HibernateServiceSupport;
 import com.rdfs.lyqc.cust.entity.DhContactAddr;
 import com.rdfs.lyqc.cust.entity.DhContactPhone;
 import com.rdfs.lyqc.cust.entity.DhPhoneRemark;

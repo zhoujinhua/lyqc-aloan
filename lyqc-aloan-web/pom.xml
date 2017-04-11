@@ -12,29 +12,28 @@
   <packaging>war</packaging>
 	<dependencies>
 		<dependency>
-		    <groupId>com.rdfs</groupId>
-		    <artifactId>rdfs-ui</artifactId>
-		    <version>${project.version}</version>
-		    <type>war</type>
+			<groupId>com.rdfs</groupId>
+			<artifactId>rdfs-framework-auth</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 		    <groupId>com.rdfs</groupId>
-		    <artifactId>rdfs-core</artifactId>
+		    <artifactId>rdfs-framework-orm</artifactId>
 		    <version>${project.version}</version>
 		</dependency>
 		<dependency>
-		    <groupId>${project.groupId}</groupId>
+		    <groupId>com.lyqc</groupId>
 		    <artifactId>lyqc-aloan-iface</artifactId>
 		    <version>${project.version}</version>
 		</dependency>
 		<dependency>
-		    <groupId>${project.groupId}</groupId>
+		    <groupId>com.lyqc</groupId>
 		    <artifactId>lyqc-aloan-soa</artifactId>
 		    <version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
+			<artifactId>javax.servlet-api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
@@ -43,6 +42,10 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
+		</dependency>
+		<dependency>
+			 <groupId>org.springframework</groupId>  
+            <artifactId>spring-test</artifactId>  
 		</dependency>
 	</dependencies>
 	<build>

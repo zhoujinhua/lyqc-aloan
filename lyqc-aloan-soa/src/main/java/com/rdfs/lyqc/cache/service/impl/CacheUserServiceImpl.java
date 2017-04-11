@@ -4,20 +4,21 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Lists;
-import com.rdfs.core.bean.UserDto;
-import com.rdfs.core.contants.Constants;
-import com.rdfs.core.exeption.RdfsException;
-import com.rdfs.core.redis.JedisUtil;
-import com.rdfs.core.utils.AuthUtil;
-import com.rdfs.core.utils.RdfsUtils;
-import com.rdfs.core.utils.StringUtils;
-import com.rdfs.hibernate.service.impl.HibernateServiceSupport;
-import com.rdfs.lyqc.cache.utils.CacheCxtUtil;
+import com.rdfs.framework.cache.service.CacheParamsService;
+import com.rdfs.framework.core.bean.UserDto;
+import com.rdfs.framework.core.contants.Constants;
+import com.rdfs.framework.core.exeption.RdfsException;
+import com.rdfs.framework.core.redis.JedisUtil;
+import com.rdfs.framework.core.utils.AuthUtil;
+import com.rdfs.framework.core.utils.JacksonUtil;
+import com.rdfs.framework.core.utils.RdfsUtils;
+import com.rdfs.framework.core.utils.StringUtils;
+import com.rdfs.framework.hibernate.service.impl.HibernateServiceSupport;
 import com.rdfs.lyqc.cache.service.CacheUserService;
-import com.rdfs.lyqc.common.utils.JacksonUtil;
 import com.rdfs.lyqc.system.entity.SyUser;
 
 import redis.clients.jedis.Jedis;
@@ -25,6 +26,9 @@ import redis.clients.jedis.Jedis;
 @Service
 public class CacheUserServiceImpl extends HibernateServiceSupport implements CacheUserService{
 
+	@Autowired
+	private CacheParamsService cacheParamsService;
+	
 	private static Logger log = LoggerFactory.getLogger(CacheUserServiceImpl.class);
 
 	/**
@@ -58,7 +62,7 @@ public class CacheUserServiceImpl extends HibernateServiceSupport implements Cac
 			throw new RdfsException("JUID不能为空");
 		}
 		String userJson = JacksonUtil.toJson(userDto);
-		String value = CacheCxtUtil.getParam("user_login_timeout_");
+		String value = cacheParamsService.getParam("user_login_timeout_");
 		if(StringUtils.isBlank(value)){
 			value = "18000";
 		}

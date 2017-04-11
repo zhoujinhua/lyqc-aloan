@@ -23,6 +23,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<link rel="stylesheet" type="text/css" href="<c:url value='${path }/static/css/login.css'/>">
 	<link rel="stylesheet" type="text/css" href="static/css/login.css">
 	<link rel="stylesheet" type="text/css" href="static/weblib/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="static/weblib/bootstrap/css/bootstrap-360.css">

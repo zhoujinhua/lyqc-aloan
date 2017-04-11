@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib uri="/WEB-INF/tld/common.tld" prefix="cs"%>
+<%@taglib uri="http://javass.cn/common/" prefix="cs"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -33,7 +33,7 @@ request.setAttribute("basePath", basePath);
 			var ids = "";
 			if(nodes!=null&&nodes.length!=0){
 				for(var i=0;i<nodes.length;i++){
-					if(!nodes[i].isParent){
+					if(!nodes[i].isParent && !nodes[i].isHidden){
 						ids += nodes[i].id+",";
 					}
 				}

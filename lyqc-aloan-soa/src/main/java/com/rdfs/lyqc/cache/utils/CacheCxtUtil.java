@@ -3,21 +3,21 @@ package com.rdfs.lyqc.cache.utils;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.rdfs.core.bean.UserDto;
-import com.rdfs.core.contants.Constants;
-import com.rdfs.core.redis.JedisUtil;
-import com.rdfs.core.spring.SpringContextBeanFactory;
-import com.rdfs.core.utils.RdfsUtils;
-import com.rdfs.lyqc.cache.service.CacheMasterService;
-import com.rdfs.lyqc.cache.service.CacheRegionService;
-import com.rdfs.lyqc.cache.service.CacheResourceService;
+import com.rdfs.framework.cache.service.CacheParamsService;
+import com.rdfs.framework.cache.service.CacheResourceService;
+import com.rdfs.framework.core.bean.UserDto;
+import com.rdfs.framework.core.contants.Constants;
+import com.rdfs.framework.core.redis.JedisUtil;
+import com.rdfs.framework.core.spring.SpringContextBeanFactory;
+import com.rdfs.framework.core.utils.RdfsUtils;
+import com.rdfs.framework.core.utils.StringUtils;
+import com.rdfs.framework.params.entity.SyRegion;
+import com.rdfs.framework.taglib.bean.DictItem;
+import com.rdfs.framework.taglib.bean.Region;
 import com.rdfs.lyqc.cache.service.CacheUserService;
-import com.rdfs.lyqc.system.entity.SyDictItem;
-import com.rdfs.lyqc.system.entity.SyRegion;
 
 @SuppressWarnings("all")
 public class CacheCxtUtil {
@@ -25,18 +25,17 @@ public class CacheCxtUtil {
 	private static Logger log = LoggerFactory.getLogger(CacheCxtUtil.class);
 	
 	private static CacheUserService cacheUserService = SpringContextBeanFactory.getBean("cacheUserServiceImpl");
-	private static CacheMasterService cacheMasterService = SpringContextBeanFactory.getBean("cacheMasterServiceImpl");
-	private static CacheRegionService cacheRegionService = SpringContextBeanFactory.getBean("cacheRegionServiceImpl");
 	private static CacheResourceService cacheResourceService = SpringContextBeanFactory.getBean("cacheResourceServiceImpl");
-
+	private static CacheParamsService cacheParamsService = SpringContextBeanFactory.getBean("cacheParamsServiceImpl");
+	
 	/**
 	 * 初始化cache
 	 */
 	public static void cacheAll(){
 		cacheUserService.cacheUserData();
-		cacheMasterService.cacheDictData();
-		cacheMasterService.cacheParamData();
-		cacheRegionService.cacheRegionData();
+		cacheParamsService.cacheDictData();
+		cacheParamsService.cacheParamData();
+		cacheParamsService.cacheRegionData();
 		cacheResourceService.cacheResourceData();
 	}
 	
@@ -46,7 +45,7 @@ public class CacheCxtUtil {
 	 * @return
 	 */
 	public static String getParam(String key){
-		return cacheMasterService.getParam(key);
+		return cacheParamsService.getParam(key);
 	}
 	
 	/**
@@ -54,8 +53,8 @@ public class CacheCxtUtil {
 	 * @param key
 	 * @return
 	 */
-	public static List<SyDictItem> getDicList(String key){
-		return cacheMasterService.getDicList(key);
+	public static List<DictItem> getDicList(String key){
+		return cacheParamsService.getDicList(key);
 	}
 	
 	/**
@@ -65,15 +64,15 @@ public class CacheCxtUtil {
 	 * @return
 	 */
 	public static String getDicDesc(String key, String code){
-		return cacheMasterService.getDicDesc(key, code);
+		return cacheParamsService.getDicDesc(key, code);
 	}
 	
 	/**
 	 * 从缓存中获取省份列表
 	 * @return
 	 */
-	public static List<SyRegion> getProvinceList(){
-		return cacheRegionService.getProvinceList();
+	public static List<Region> getProvinceList(){
+		return cacheParamsService.getProvinceList();
 	}
 	
 	/**
@@ -81,8 +80,8 @@ public class CacheCxtUtil {
 	 * @param regCode
 	 * @return
 	 */
-	public static List<SyRegion> getCityList(String regCode){
-		return cacheRegionService.getCityList(regCode);
+	public static List<Region> getCityList(String regCode){
+		return cacheParamsService.getCityList(regCode);
 	}
 	
 	/**
@@ -91,15 +90,15 @@ public class CacheCxtUtil {
 	 * @return
 	 */
 	public static SyRegion getRegion(String regCode){
-		return cacheRegionService.getRegion(regCode);
+		return (SyRegion) cacheParamsService.getRegion(regCode);
 	}
 	
 	/**
 	 * 获取全部地区
 	 * @return
 	 */
-	public static List<SyRegion> getRegionList(){
-		return cacheRegionService.getRegionList();
+	public static List<Region> getRegionList(){
+		return cacheParamsService.getRegionList();
 	}
 	
 	/**
@@ -117,7 +116,7 @@ public class CacheCxtUtil {
 			value = "000001";
 			JedisUtil.setString(Constants.KEYS.APP_SEQ + prefix, value, 86500);
 		} else {
-			value = com.rdfs.core.utils.StringUtils.prefixZoreFill(String.valueOf(Integer.parseInt(value)+1), 6);
+			value = StringUtils.prefixZoreFill(String.valueOf(Integer.parseInt(value)+1), 6);
 			JedisUtil.setString(Constants.KEYS.APP_SEQ + prefix, value, 86500);
 		}
 		return value;

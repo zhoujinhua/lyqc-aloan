@@ -14,8 +14,9 @@ import org.hibernate.event.spi.PostUpdateEvent;
 import org.hibernate.event.spi.PostUpdateEventListener;
 import org.springframework.stereotype.Component;
 
-import com.rdfs.core.utils.JsonUtil;
-import com.rdfs.core.utils.StringUtils;
+import com.rdfs.framework.core.utils.JsonUtil;
+import com.rdfs.framework.core.utils.StringUtils;
+
 
 @Component
 public class AuditListener  implements PostInsertEventListener,PostUpdateEventListener, PostDeleteEventListener{

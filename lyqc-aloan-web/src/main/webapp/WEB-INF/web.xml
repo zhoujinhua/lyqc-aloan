@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xmlns="http://java.sun.com/xml/ns/javaee" 
+		xmlns:web="http://java.sun.com/xml/ns/javaee" 
+		xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
   <filter>
     <filter-name>CharacterEncodingFilter</filter-name>
     <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -14,22 +17,6 @@
   </filter>
   <filter-mapping>
     <filter-name>CharacterEncodingFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
-  <filter>
-    <filter-name>BackURLFilter</filter-name>
-    <filter-class>com.rdfs.core.filter.BackURLFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>BackURLFilter</filter-name>
-    <url-pattern>/view/*</url-pattern>
-  </filter-mapping>
-  <filter>
-    <filter-name>ajaxSessionTimeout</filter-name>
-    <filter-class>com.rdfs.core.filter.AjaxSessionTimeoutFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>ajaxSessionTimeout</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
   <context-param>
@@ -68,18 +55,6 @@
     <servlet-name>spring-dispatcher</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <servlet-name>imagepath</servlet-name>
-    <servlet-class>com.rdfs.lyqc.system.servlet.YZImageServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>imagepath</servlet-name>
-    <url-pattern>/yzimage</url-pattern>
-  </servlet-mapping>
-  <!-- 系统启动监听器 -->
-	<listener>
-		<listener-class>com.rdfs.lyqc.system.listener.RdfsInitListener</listener-class>
-	</listener>
   <session-config>
     <session-timeout>60</session-timeout>
   </session-config>

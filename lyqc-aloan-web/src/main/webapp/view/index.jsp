@@ -1,5 +1,5 @@
-<%@page import="com.rdfs.core.utils.AuthUtil"%>
-<%@page import="com.rdfs.core.bean.UserDto"%>
+<%@page import="com.rdfs.framework.core.utils.AuthUtil"%>
+<%@page import="com.rdfs.framework.core.bean.UserDto"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();

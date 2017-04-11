@@ -15,16 +15,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.rdfs.core.bean.Page;
-import com.rdfs.core.utils.AuthUtil;
-import com.rdfs.core.utils.StringUtils;
-import com.rdfs.hibernate.enums.OperMode;
+import com.rdfs.framework.core.bean.TreeDto;
+import com.rdfs.framework.core.utils.AuthUtil;
+import com.rdfs.framework.core.utils.JacksonUtil;
+import com.rdfs.framework.core.utils.ReturnUitl;
+import com.rdfs.framework.core.utils.StringUtils;
+import com.rdfs.framework.hibernate.bean.Page;
+import com.rdfs.framework.hibernate.enums.OperMode;
+import com.rdfs.framework.hibernate.utils.PageUtil;
 import com.rdfs.lyqc.carloan.entity.DmAppInfo;
 import com.rdfs.lyqc.carloan.entity.vo.VAppInfo;
 import com.rdfs.lyqc.carloan.service.AppInfoService;
-import com.rdfs.lyqc.common.dto.TreeDto;
-import com.rdfs.lyqc.common.utils.JacksonUtil;
-import com.rdfs.lyqc.common.utils.ReturnUitl;
 import com.rdfs.lyqc.cust.entity.DhContactAddr;
 import com.rdfs.lyqc.cust.entity.DhContactPhone;
 import com.rdfs.lyqc.cust.entity.DhPhoneRemark;
@@ -47,14 +48,21 @@ public class CustomerController {
 	public String detail(HttpServletRequest request, DmAppInfo appInfo){
 		appInfo = appInfoService.getEntityByCode(DmAppInfo.class, appInfo.getAppCode(), true);
 		request.setAttribute("appInfo", appInfo);
-		return "cust/detail";
+		return "cust/info/detail";
+	}
+	
+	@RequestMapping("remarkDetail")
+	public String remarkDetail(HttpServletRequest request, DmAppInfo appInfo){
+		appInfo = appInfoService.getEntityByCode(DmAppInfo.class, appInfo.getAppCode(), true);
+		request.setAttribute("appInfo", appInfo);
+		return "cust/edit/detail";
 	}
 	
 	@RequestMapping("phoneList")
 	@ResponseBody
 	public Map<String,Object> list(HttpServletRequest request, DhContactPhone phone){
 		Map<String, Object> map = new HashMap<String,Object>();
-		Page page = appInfoService.pageList(phone, AuthUtil.getPage(request), OperMode.EQ, "appCode");
+		Page page = appInfoService.pageList(phone, PageUtil.getPage(request), OperMode.EQ, "appCode");
 		map.put("aaData", page.getItems());
 		map.put("recordsTotal", page.getCount());
 	    map.put("recordsFiltered", page.getCount());
@@ -66,7 +74,7 @@ public class CustomerController {
 	@ResponseBody
 	public Map<String,Object> list(HttpServletRequest request, DhContactAddr addr){
 		Map<String, Object> map = new HashMap<String,Object>();
-		Page page = appInfoService.pageList(addr, AuthUtil.getPage(request), OperMode.EQ, "appCode");
+		Page page = appInfoService.pageList(addr, PageUtil.getPage(request), OperMode.EQ, "appCode");
 		map.put("aaData", page.getItems());
 		map.put("recordsTotal", page.getCount());
 		map.put("recordsFiltered", page.getCount());
@@ -78,7 +86,7 @@ public class CustomerController {
 	@ResponseBody
 	public Map<String,Object> list(HttpServletRequest request, DhPhoneRemark remark){
 		Map<String, Object> map = new HashMap<String,Object>();
-		Page page = appInfoService.pageList(remark, AuthUtil.getPage(request), OperMode.EQ, "appCode");
+		Page page = appInfoService.pageList(remark, PageUtil.getPage(request), OperMode.EQ, "appCode");
 		map.put("aaData", page.getItems());
 		map.put("recordsTotal", page.getCount());
 		map.put("recordsFiltered", page.getCount());
@@ -110,7 +118,6 @@ public class CustomerController {
 			DhContactPhone contactPhone = contactPhoneService.getEntityById(DhContactPhone.class, phone.getId(), true);
 			request.setAttribute("phone", contactPhone);
 		}
-		
 		return "cust/remark/remark";
 	}
 	

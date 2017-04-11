@@ -84,6 +84,9 @@
         <property name="collPhoneOperator" type="java.lang.String">
             <column name="COLL_PHONE_OPERATOR" />
         </property>
+        <property name="collPhoneOperatorName" type="java.lang.String">
+            <column name="COLL_PHONE_OPERATOR_NAME" />
+        </property>
         <property name="litionStatus" type="java.lang.String">
             <column name="LITION_STATUS" />
         </property>
